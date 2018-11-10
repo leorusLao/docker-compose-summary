@@ -1,0 +1,52 @@
+version: '2'
+
+services:
+    web:
+        image: nginx:1.10
+        privileged: true
+        ports:
+            - "80:80"
+        volumes:
+            - /mnt/hgfs/leorus:/code
+            - /mnt/hgfs/leorus/logs:/logs
+            - ./conf:/etc/nginx/conf.d/
+        networks:
+            - code-network
+    php:
+        image: leoruslao/php-fpm:7.1-rm
+        privileged: true
+        volumes:
+            - /mnt/hgfs/leorus:/code
+        networks:
+            - code-network
+    mysql:
+        image: mysql:5.7
+        privileged: true
+        volumes:
+            - /usr/share/mysql:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_USER: root
+            MYSQL_PASSWORD: password
+        networks:
+            - code-network
+    redis:
+        image: redis:4.0.11
+        privileged: true
+        command: redis-server --requirepass mowork&201809
+        ports:
+            - "6379:6379"
+        networks:
+            - code-network
+    rabbitmq:
+        image: rabbitmq:3.7.8
+        privileged: true
+        ports:
+            - "5672:5672"
+        networks:
+            - code-network
+
+networks:
+    code-network:
+        driver: bridge
