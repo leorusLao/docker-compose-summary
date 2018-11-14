@@ -1,0 +1,56 @@
+version: '2'
+
+services:
+    nginx:
+        image: nginx:1.10
+        privileged: true
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - /mnt/hgfs/leorus/goroot/logs:/logs
+            - /mnt/hgfs/leorus/goroot:/code
+            - ./conf:/etc/nginx/conf.d/
+        depends_on:
+            - go
+            - node
+        networks:
+            - code-network
+    go:
+        image: golang:1.9
+        privileged: true
+        volumes:
+            - /mnt/hgfs/leorus/goroot:/go/src/github.com
+        tty: true
+        networks:
+            - code-network
+    node:
+        image: node:10.13
+        privileged: true
+        volumes:
+            - /mnt/hgfs/leorus/goroot:/code
+        tty: true
+        networks:
+            - code-network
+    mysql:
+        image: mysql:5.7
+        privileged: true
+        volumes:
+            - /usr/share/mysql:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_USER: root
+            MYSQL_PASSWORD: password
+        networks:
+            - code-network
+    redis:
+        image: redis:4.0.11
+        privileged: true
+        command: redis-server --requirepass mowork&201809
+        networks:
+            - code-network
+
+networks:
+    code-network:
+        driver: bridge
