@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+    web:
+        image: onlyoffice/documentserver
+        privileged: true
+        ports:
+            - "9000:80"
+        volumes:
+            - /mnt/hgfs/github:/code
+            - /home/onlyoffice/log:/var/log/onlyoffice
+            - /home/onlyoffice/Data:/var/www/onlyoffice/Data
+            - /home/onlyoffice/lib:/var/lib/onlyoffice
+            - /home/onlyoffice/postgresql:/var/lib/postgresql
+        networks:
+            - code-network
+
+networks:
+    code-network:
+        driver: bridge

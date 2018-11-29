@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+    tomcat:
+        image: tomcat:8.5-jre8
+        privileged: true
+        ports:
+            - "8080:8080"
+        volumes:
+            - /mnt/hgfs/github:/code
+            - ./server.xml:/usr/local/tomcat/conf/server.xml
+        networks:
+            - code-network
+
+networks:
+    code-network:
+        driver: bridge
