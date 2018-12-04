@@ -1,0 +1,7 @@
+version: "3"
+services:
+  debian:
+    image: debian:gr
+    container_name: debian
+    restart: always
+    tty: true

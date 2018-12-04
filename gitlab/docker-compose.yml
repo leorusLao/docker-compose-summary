@@ -7,12 +7,13 @@ services:
     hostname: '120.79.173.49'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url "http://120.79.173.49:9090"
+        external_url 'http://120.79.173.49:9090'
         gitlab_rails['gitlab_shell_ssh_port'] = 2222
     ports:
       - '9090:9090'
       - '2222:22'
     volumes:
+      - '/etc/localtime:/etc/localtime'
       - '/srv/gitlab/config:/etc/gitlab'
       - '/srv/gitlab/logs:/var/log/gitlab'
       - '/srv/gitlab/data:/var/opt/gitlab'

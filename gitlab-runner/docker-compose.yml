@@ -1,0 +1,11 @@
+version: "3"
+services:
+  gitlab-runner:
+    image: gitlab/gitlab-runner
+    container_name: gitlab-runner
+    restart: always
+    volumes:
+      - '/etc/localtime:/etc/localtime'
+      - '/srv/gitlab-runner/config:/etc/gitlab-runner'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/home/wwwroot:/code'
