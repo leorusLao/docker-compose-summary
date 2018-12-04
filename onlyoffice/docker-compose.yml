@@ -7,7 +7,6 @@ services:
         ports:
             - "9000:80"
         volumes:
-            - /mnt/hgfs/github:/code
             - /home/onlyoffice/log:/var/log/onlyoffice
             - /home/onlyoffice/Data:/var/www/onlyoffice/Data
             - /home/onlyoffice/lib:/var/lib/onlyoffice
