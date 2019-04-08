@@ -3,6 +3,7 @@ services:
     jenkins:
         image: 'jenkins/jenkins:lts'
         container_name: jenkins
+        user: root
         privileged: true
         restart: always
         ports:
@@ -10,3 +11,5 @@ services:
           - '50000:50000'
         volumes:
           - '/home/jenkins_home:/var/jenkins_home'
+          - '/etc/localtime:/etc/localtime'
+          - './timezone:/etc/timezone'
